@@ -41,8 +41,7 @@ WORKDIR /home/wago
 RUN cd /home/wago/ptxproj \
  &&	ptxdist select configs/wago-pfcXXX/ptxconfig_generic \
  &&	ptxdist platform configs/wago-pfcXXX/platformconfig \
- &&	ptxdist toolchain /opt/gcc-Toolchain-2019.12/arm-linux-gnueabihf/bin/ \
- &&	ptxdist select configs/wago-pfcXXX/ptxconfig_generic
+ &&	ptxdist toolchain /opt/gcc-Toolchain-2019.12/arm-linux-gnueabihf/bin/
 
 ##
 # Get SRC
