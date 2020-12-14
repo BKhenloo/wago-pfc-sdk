@@ -1,0 +1,6 @@
+[submodule "pfc-firmware-sdk"]
+	path = pfc-firmware-sdk
+	url = https://github.com/WAGO/pfc-firmware-sdk.git
+[submodule "ptxdist"]
+	path = ptxdist
+	url = http://github.com/wago/ptxdist.git
