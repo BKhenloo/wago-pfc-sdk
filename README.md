@@ -1,6 +1,6 @@
 # WAGO PFC-Firmware-SDK
 
-This container is the installation of this [wago/prc-firmware-sdk](https://github.com/wago/prc-firmware-sdk) repository.
+This container is the installation of this [wago/pfc-firmware-sdk](https://github.com/wago/prc-firmware-sdk) repository.
 
 ## Getting Started
 
