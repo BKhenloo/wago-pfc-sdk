@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y apt-utils git git-lfs wget \
  &&	git clone https://github.com/wago/gcc-toolchain-2019.12-precompiled.git /opt/gcc-Toolchain-2019.12 \
  &&	chown wago:root /home/wago -R
 # Get build utilities and build ptxdist env
-RUN DEBIAN_FRONTEND="noninteractive" && apt-get install -y tzdata \
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y tzdata \
 		libncurses5-dev gawk flex bison texinfo python-dev g++ dialog lzop autoconf libtool xmlstarlet xsltproc doxygen autopoint \
 		make gettext \
  &&	git clone https://github.com/wago/ptxdist.git /tmp/ptxdist && cd /tmp/ptxdist && ./configure && make && make install && cd ~ && rm -rf /tmp/ptxdist
