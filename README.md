@@ -39,8 +39,8 @@ docker run -d -v <path>:/home/wago:rw bkhenloo/wago-pfc-sdk
 #### Useful File Locations
 
 * `/home/wago/ptxproj` 						- PFC Firmware
-* `./configs/wago-pfcXXX/ptxconfig_generic	- PFC Firmware device selection
-* `./configs/wago-pfcXXX/platformconfig		- PFC Firmware platform configuration
+  * `./configs/wago-pfcXXX/ptxconfig_generic`	- PFC Firmware device selection
+  * `./configs/wago-pfcXXX/platformconfig`		- PFC Firmware platform configuration
 * `/opt/gcc-Toolchain-2019.12`				- Cross-Compiler Toolchain
 
 
