@@ -18,7 +18,7 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y tzdata \
  &&	git clone https://github.com/wago/ptxdist.git /tmp/ptxdist && cd /tmp/ptxdist && ./configure && make && make install && cd ~ && rm -rf /tmp/ptxdist
 
 # Make Clean
-RUN apt-get purge git git-lfs \
+RUN apt-get purge -y git git-lfs \
  &&	apt-get autoclean \
  &&	apt-get autoremove \
  &&	rm -rf /var/lib/apt/lists/*
