@@ -27,7 +27,7 @@ RUN useradd -m -s /bin/bash -g root -u 1000 wago
 ##
 # Create ptxdist environment
 USER wago
-ADD ptxdist /home/wago/
+ADD ptxdist /home/wago/ptxdist
 RUN cd /home/wago/ptxdist && ./configure && make
 USER root
 RUN cd /home/wago/ptxdist && make install && cd .. && rm -rf /home/wago/ptxdist
@@ -39,7 +39,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 ##
 # ADD INIT script
-ADD container-setup.sh /usr/bin/
+ADD container-setup.sh /usr/bin/container-setup.sh
 RUN chmod 755 /usr/bin/container-setup.sh
 
 ##
