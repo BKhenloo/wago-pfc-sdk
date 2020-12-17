@@ -47,7 +47,6 @@ ENV 'ptxproj=https://github.com/wago/pfc-firmware-sdk.git --depth 1'
 ENV 'ptxsrc=https://github.com/nlohmann/json.git --branch v3.7.0 --depth 1'
 
 VOLUME /home/wago/ptxproj
-VOLUME /home/wago/ptxproj/src
 
 USER wago
 
