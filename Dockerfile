@@ -22,7 +22,14 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y tzdata \
 # && DEBIAN_FRONTEND="noninteractive" apt-get autoclean \
 # && DEBIAN_FRONTEND="noninteractive" apt-get clean \
 # && DEBIAN_FRONTEND="noninteractive" apt-get autoremove \
-# &&	rm -rf /var/lib/apt/lists/*
+# &&	rm -rf /var/lib/apt/lists/* 
+ 
+ 
+##
+# Set content
+VOLUME /home/wago
+USER wago
+WORKDIR /home/wago
 
 ##
 # Configure the "project environment"
@@ -40,12 +47,8 @@ RUN cd /home/wago/ptxproj \
  &&	ptxdist toolchain /opt/gcc-Toolchain-2019.12/arm-linux-gnueabihf/bin/
 
 ##
-# Get SRC
-RUN wget https://github.com/nlohmann/json/archive/v3.7.0.tar.gz /tmp/v3.7.0.tar.gz \
- &&	mkdir -p /home/wago/ptxproj/src && tar xzfv /tmp/v3.7.0.tar.gz -C $_ 
- 
-##
-# Set content
-VOLUME /home/wago
-USER wago
-WORKDIR /home/wago
+# Get SRC and move content to src folder
+RUN wget https://github.com/nlohmann/json/archive/v3.7.0.tar.gz -o /home/wago/v3.7.0.tar.gz \
+ &&	mkdir -p /home/wago/ptxproj/src && tar xzfv /home/wago/v3.7.0.tar.gz -C $_ \
+ &&	rm -rf /home/wago/v3.7.0.tar.gz
+
