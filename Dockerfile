@@ -24,11 +24,6 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y tzdata \
 # && DEBIAN_FRONTEND="noninteractive" apt-get autoremove \
 # &&	rm -rf /var/lib/apt/lists/*
 
-# Set content
-VOLUME /home/wago
-USER wago
-WORKDIR /home/wago
-
 ##
 # Configure the "project environment"
 #	1. Select "software config" we want to build
@@ -49,3 +44,8 @@ RUN cd /home/wago/ptxproj \
 RUN wget https://github.com/nlohmann/json/archive/v3.7.0.tar.gz /tmp/v3.7.0.tar.gz \
  &&	mkdir -p /home/wago/ptxproj/src && tar xzfv /tmp/v3.7.0.tar.gz -C $_ 
  
+##
+# Set content
+VOLUME /home/wago
+USER wago
+WORKDIR /home/wago
