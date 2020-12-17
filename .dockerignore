@@ -1,0 +1,1 @@
+#Before the docker CLI sends the context to the docker daemon, it looks for a file named .dockerignore in the root directory of the context.
