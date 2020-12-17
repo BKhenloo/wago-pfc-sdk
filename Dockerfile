@@ -3,7 +3,8 @@ MAINTAINER "Briezh Khenloo"
 
 ##
 # Install nessesary content by APT
-RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y tzdata \
+RUN apt-get update \
+ && DEBIAN_FRONTEND="noninteractive" apt-get install -y tzdata \
 		libncurses5-dev gawk flex bison texinfo python-dev g++ dialog lzop autoconf libtool xmlstarlet xsltproc doxygen autopoint \
 		make gettext wget \
 		apt-utils git git-lfs
