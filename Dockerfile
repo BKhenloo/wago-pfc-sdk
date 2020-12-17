@@ -26,8 +26,9 @@ RUN useradd -m -s /bin/bash -g root -u 1000 wago
 
 ##
 # Create ptxdist environment
-USER wago
 ADD ptxdist /home/wago/ptxdist
+RUN chown wago:root /home/wago/ptxdist -R
+USER wago
 RUN cd /home/wago/ptxdist && ./configure && make
 USER root
 RUN cd /home/wago/ptxdist && make install && cd .. && rm -rf /home/wago/ptxdist
