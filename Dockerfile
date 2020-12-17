@@ -2,53 +2,58 @@ FROM docker.io/ubuntu:latest
 MAINTAINER "Briezh Khenloo"
 
 ##
+# Install nessesary content by APT
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y tzdata \
+		libncurses5-dev gawk flex bison texinfo python-dev g++ dialog lzop autoconf libtool xmlstarlet xsltproc doxygen autopoint \
+		make gettext wget \
+		apt-utils git git-lfs
+		
+
+# Set timezone
+ENV TZ=Europe/Berlin
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+
+##
+# Get Cross-Compiler-Toolchain
+RUN git clone https://github.com/wago/gcc-toolchain-2019.12-precompiled.git --depth 1 /opt/gcc-toolchain-2019.12
+
+##
 # Create User
 RUN useradd -m -s /bin/bash -g root -u 1000 wago
 
-##
-# Install GIT to pull content: PFC-Firmware-SDK, Cross-Toolchain, ptxdist
-RUN apt-get update && apt-get install -y apt-utils git git-lfs wget \
- &&	git clone https://github.com/wago/pfc-firmware-sdk.git /home/wago/ptxproj \
- &&	git clone https://github.com/wago/gcc-toolchain-2019.12-precompiled.git /opt/gcc-Toolchain-2019.12 \
- &&	chown wago:root /home/wago -R
-# Get build utilities and build ptxdist env
-RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y tzdata \
-		libncurses5-dev gawk flex bison texinfo python-dev g++ dialog lzop autoconf libtool xmlstarlet xsltproc doxygen autopoint \
-		make gettext \
- &&	git clone https://github.com/wago/ptxdist.git /tmp/ptxdist && cd /tmp/ptxdist && ./configure && make && make install && cd ~ && rm -rf /tmp/ptxdist
 
-# Make Clean
-#RUN DEBIAN_FRONTEND="noninteractive" apt-get purge -y git git-lfs \
-# && DEBIAN_FRONTEND="noninteractive" apt-get autoclean \
-# && DEBIAN_FRONTEND="noninteractive" apt-get clean \
-# && DEBIAN_FRONTEND="noninteractive" apt-get autoremove \
-# &&	rm -rf /var/lib/apt/lists/* 
- 
- 
 ##
-# Set content
-VOLUME /home/wago
+# Create ptxdist environment
 USER wago
+ADD ptxdist /home/wago/
+RUN cd /home/wago/ptxdist && ./configure && make
+USER root
+RUN cd /home/wago/ptxdist && make install && cd .. && rm -rf /home/wago/ptxdist
+
+##
+# Make Clean
+RUN rm -rf /var/lib/apt/lists/*
+ 
+
+##
+# ADD INIT script
+ADD container-setup.sh /usr/bin/
+RUN chmod 755 /usr/bin/container-setup.sh
+
+##
+# Set environment, volume(s), ...
+ENV 'ptxproj=https://github.com/wago/pfc-firmware-sdk.git --depth 1'
+ENV 'ptxsrc=https://github.com/nlohmann/json.git --branch v3.7.0 --depth 1'
+
+VOLUME /home/wago/ptxproj
+VOLUME /home/wago/ptxproj/src
+
+USER wago
+
 WORKDIR /home/wago
 
-##
-# Configure the "project environment"
-#	1. Select "software config" we want to build
-#	2. Select "hardware platform" to dial with
-#	3. Select "toolchain" to use
-# ToDo
-#	- Enter the main menu dialog once
-#		ptxdist menu
-#	- Open the menuconfig dialog once
-#		ptxdist menuconfig
-RUN cd /home/wago/ptxproj \
- &&	ptxdist select configs/wago-pfcXXX/ptxconfig_generic \
- &&	ptxdist platform configs/wago-pfcXXX/platformconfig \
- &&	ptxdist toolchain /opt/gcc-Toolchain-2019.12/arm-linux-gnueabihf/bin/
+ENTRYPOINT ["/usr/bin/container-setup.sh"]
+CMD ["startup"]
 
-##
-# Get SRC and move content to src folder
-RUN wget https://github.com/nlohmann/json/archive/v3.7.0.tar.gz -o /home/wago/v3.7.0.tar.gz \
- &&	mkdir -p /home/wago/ptxproj/src && tar xzfv /home/wago/v3.7.0.tar.gz -C /home/wago/ptxproj/src \
- &&	rm -rf /home/wago/v3.7.0.tar.gz
 
