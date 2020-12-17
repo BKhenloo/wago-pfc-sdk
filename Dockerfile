@@ -49,6 +49,6 @@ RUN cd /home/wago/ptxproj \
 ##
 # Get SRC and move content to src folder
 RUN wget https://github.com/nlohmann/json/archive/v3.7.0.tar.gz -o /home/wago/v3.7.0.tar.gz \
- &&	mkdir -p /home/wago/ptxproj/src && tar xzfv /home/wago/v3.7.0.tar.gz -C $_ \
+ &&	mkdir -p /home/wago/ptxproj/src && tar xzfv /home/wago/v3.7.0.tar.gz -C /home/wago/ptxproj/src \
  &&	rm -rf /home/wago/v3.7.0.tar.gz
 
