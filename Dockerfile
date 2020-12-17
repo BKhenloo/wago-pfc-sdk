@@ -18,11 +18,11 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y tzdata \
  &&	git clone https://github.com/wago/ptxdist.git /tmp/ptxdist && cd /tmp/ptxdist && ./configure && make && make install && cd ~ && rm -rf /tmp/ptxdist
 
 # Make Clean
-RUN DEBIAN_FRONTEND="noninteractive" apt-get purge -y git git-lfs \
- && DEBIAN_FRONTEND="noninteractive" apt-get autoclean \
- && DEBIAN_FRONTEND="noninteractive" apt-get clean \
- && DEBIAN_FRONTEND="noninteractive" apt-get autoremove \
- &&	rm -rf /var/lib/apt/lists/*
+#RUN DEBIAN_FRONTEND="noninteractive" apt-get purge -y git git-lfs \
+# && DEBIAN_FRONTEND="noninteractive" apt-get autoclean \
+# && DEBIAN_FRONTEND="noninteractive" apt-get clean \
+# && DEBIAN_FRONTEND="noninteractive" apt-get autoremove \
+# &&	rm -rf /var/lib/apt/lists/*
 
 # Set content
 VOLUME /home/wago
